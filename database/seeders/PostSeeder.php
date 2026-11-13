@@ -28,7 +28,6 @@ class PostSeeder extends Seeder
         'title' => 'Purok Ledesma Clean-up Drive',
         'category' => 'Announcement',
         'body' => 'Please join our clean-up drive!',
-        'is_published' => true,
         'is_pinned' => true,
         'published_at' => '2004-09-14 08:00:00',
     ]);

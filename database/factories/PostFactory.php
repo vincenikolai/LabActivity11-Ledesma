@@ -22,7 +22,6 @@ class PostFactory extends Factory
         'title' => fake()->sentence(6),
         'category' => fake()->randomElement(['Announcement', 'Health', 'Peace & Order', 'Ayuda', 'Sports']),
         'body' => fake()->paragraphs(3, true),
-        'is_published' => true,
         'published_at' => fake()->dateTimeBetween('-3 months', 'now'),
     ];
 }
@@ -30,7 +29,6 @@ class PostFactory extends Factory
 public function draft(): static
 {
     return $this->state(fn () => [
-        'is_published' => false,
         'published_at' => null,
     ]);
 }
