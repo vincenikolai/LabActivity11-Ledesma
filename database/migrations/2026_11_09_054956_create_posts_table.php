@@ -9,23 +9,16 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up(): void
+   public function up(): void
 {
-    Schema::create('posts', function (Blueprint $table) {
-        $table->id();
-        $table->foreignId('author_id')->constrained()->cascadeOnDelete();
-        $table->string('title');
-        $table->string('category');
-        $table->text('body');
-        $table->boolean('is_published')->default(false);
-        $table->boolean('is_pinned')->default(false);
-        $table->timestamp('published_at')->nullable();
-        $table->timestamps();
+    Schema::create('post_tag', function (Blueprint $table) {
+        $table->foreignId('post_id')->constrained()->cascadeOnDelete();
+        $table->foreignId('tag_id')->constrained()->cascadeOnDelete();
+        $table->primary(['post_id', 'tag_id']);
     });
 }
- 
 public function down(): void
 {
-    Schema::dropIfExists('posts');
+    Schema::dropIfExists('post_tag');
 }
 };

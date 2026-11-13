@@ -12,17 +12,13 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('authors', function (Blueprint $table) {
-            //
+            $table->foreignId('user_id')->nullable()->unique()->constrained('users')->nullOnDelete();
         });
     }
-
-    /**
-     * Reverse the migrations.
-     */
-    public function down(): void
-    {
-        Schema::table('authors', function (Blueprint $table) {
-            //
-        });
-    }
+public function down(): void
+{
+    Schema::table('authors', function (Blueprint $table) {
+        $table->dropForeign(['user_id']);$table->dropColumn('user_id');
+    });
+}
 };
