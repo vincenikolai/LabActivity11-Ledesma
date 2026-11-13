@@ -11,6 +11,14 @@ class Post extends Model
 
     protected $fillable = ['title', 'body', 'category', 'published_at', 'is_pinned', 'author_id']; 
 
+    protected function casts(): array
+    {
+        return [
+            'published_at' => 'datetime',
+            'is_pinned' => 'boolean',
+        ];
+    }
+
     // --- ADD YOUR NEW METHODS HERE ---
     public function author() { 
         return $this->belongsTo(Author::class, 'author_id'); 

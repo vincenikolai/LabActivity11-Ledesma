@@ -23,10 +23,10 @@ class PostController extends Controller
             });
         }
 
-        if ($request->has('search')) {
+        if ($request->has('q')) {
             $query->where(function($q) use ($request) {
-                $q->where('title', 'like', '%' . $request->search . '%')
-                  ->orWhere('body', 'like', '%' . $request->search . '%');
+                $q->where('title', 'like', '%' . $request->q . '%')
+                  ->orWhere('body', 'like', '%' . $request->q . '%');
             });
         }
 
@@ -35,7 +35,9 @@ class PostController extends Controller
         }
         
         $posts = $query->paginate(10)->withQueryString();
-        return view('posts.index', compact('posts'));
+        $categories = Post::query()->distinct()->orderBy('category')->pluck('category');
+
+        return view('posts.index', compact('posts', 'categories'));
     }
 
     public function show($id)
