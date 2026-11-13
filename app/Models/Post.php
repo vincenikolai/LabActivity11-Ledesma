@@ -9,7 +9,9 @@ class Post extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['title', 'body', 'category', 'published_at', 'is_pinned', 'author_id']; 
+    public const CATEGORIES = ['Announcement', 'Event', 'Missing', 'Found', 'Other', 'Sports'];
+
+    protected $fillable = ['title', 'body', 'category', 'author_id'];
 
     protected function casts(): array
     {

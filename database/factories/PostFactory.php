@@ -20,7 +20,7 @@ class PostFactory extends Factory
     return [
         'author_id' => \App\Models\Author::factory(),
         'title' => fake()->sentence(6),
-        'category' => fake()->randomElement(['Announcement', 'Health', 'Peace & Order', 'Ayuda', 'Sports']),
+        'category' => fake()->randomElement(Post::CATEGORIES),
         'body' => fake()->paragraphs(3, true),
         'published_at' => fake()->dateTimeBetween('-3 months', 'now'),
     ];

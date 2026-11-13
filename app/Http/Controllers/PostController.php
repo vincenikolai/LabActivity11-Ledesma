@@ -14,7 +14,7 @@ class PostController extends Controller
         $query = Post::whereNotNull('published_at')
             ->with(['author', 'tags']) 
             ->withCount('comments')    
-            ->orderBy('is_pinned', 'desc')
+            ->orderByDesc('is_pinned')
             ->latest('published_at');
 
         if ($request->has('tag')) {
@@ -34,7 +34,7 @@ class PostController extends Controller
             $query->where('category', $request->category);
         }
         
-        $posts = $query->paginate(10)->withQueryString();
+        $posts = $query->paginate(7)->withQueryString();
         $categories = Post::query()->distinct()->orderBy('category')->pluck('category');
 
         return view('posts.index', compact('posts', 'categories'));
@@ -42,7 +42,7 @@ class PostController extends Controller
 
     public function show($id)
     {
-        $post = Post::findOrFail($id);
+        $post = Post::whereNotNull('published_at')->findOrFail($id);
         $post->increment('views');
         
         $post->load(['author', 'tags', 'comments.user']); 
@@ -65,6 +65,10 @@ class PostController extends Controller
         }
 
         $post = auth()->user()->author->posts()->create($data);
+        if ($request->boolean('is_published')) {
+            $post->published_at = now();
+            $post->save();
+        }
         $post->tags()->sync($request->validated('tags'));
 
         return redirect()->route('posts.index')->with('status', 'Post created successfully.');

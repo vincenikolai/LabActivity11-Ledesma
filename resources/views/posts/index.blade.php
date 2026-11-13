@@ -27,7 +27,19 @@
                 {{ $post->views }} views
             </div>
             <p class="text-gray-700">{{ Str::limit($post->body, 100) }}</p>
-            <p class="text-xs text-gray-400 mt-2">Author ID: {{ $post->author_id }}</p>
+            <p class="text-xs text-gray-400 mt-2">
+                By
+                <a href="{{ route('authors.show', $post->author) }}" class="text-blue-600 hover:underline">
+                    {{ $post->author->name }}
+                </a>
+            </p>
+            <div class="flex flex-wrap gap-2 mt-3">
+                @foreach($post->tags as $tag)
+                    <a href="{{ route('posts.index', ['tag' => $tag->name]) }}" class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded">
+                        {{ $tag->name }}
+                    </a>
+                @endforeach
+            </div>
         </div>
     @empty
         <p class="col-span-full text-center text-gray-500">No posts match your search.</p>

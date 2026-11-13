@@ -1,4 +1,6 @@
-<x-layout>
+@extends('layouts.app')
+
+@section('content')
     <div class="max-w-2xl mx-auto p-6 bg-white rounded shadow-md mt-10">
         <h1 class="text-2xl font-bold mb-6">Create a New Post</h1>
 
@@ -6,7 +8,7 @@
         @if ($errors->any())
             <div class="bg-red-100 text-red-700 p-4 rounded mb-6">
                 <ul class="list-disc pl-5">
-                    @foreach ($errors->all() as$error)
+                    @foreach ($errors->all() as $error)
                         <li>{{ $error }}</li>
                     @endforeach
                 </ul>
@@ -41,8 +43,8 @@
                 <label for="category" class="block font-bold mb-1">Category</label>
                 <select name="category" id="category" class="w-full border rounded p-2 focus:outline-blue-500">
                     <option value="">Select a Category</option>
-                    @foreach(['Announcement', 'Event', 'Missing', 'Found', 'Other'] as $cat)
-                        <option value="{{ $cat }}" @selected(old('category') == $cat)>{{$cat }}</option>
+                    @foreach(\App\Models\Post::CATEGORIES as $cat)
+                        <option value="{{ $cat }}" @selected(old('category') == $cat)>{{ $cat }}</option>
                     @endforeach
                 </select>
                 @error('category')
@@ -54,7 +56,7 @@
             <div class="mb-4">
                 <label class="block font-bold mb-2">Tags</label>
                 <div class="flex flex-wrap gap-4">
-                    @foreach($tags as$tag)
+                    @foreach($tags as $tag)
                         <label class="flex items-center gap-1 cursor-pointer">
                             <input type="checkbox" name="tags[]" value="{{ $tag->id }}" 
                                 @checked(is_array(old('tags')) && in_array($tag->id, old('tags')))>
@@ -65,6 +67,9 @@
                 @error('tags')
                     <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                 @enderror
+                @error('tags.*')
+                    <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                @enderror
             </div>
 
             <!-- Publish Checkbox -->
@@ -73,6 +78,9 @@
                     <input type="checkbox" name="is_published" value="1" @checked(old('is_published'))>
                     Publish immediately?
                 </label>
+                @error('is_published')
+                    <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                @enderror
             </div>
 
             <!-- Submit Button -->
@@ -81,4 +89,4 @@
             </button>
         </form>
     </div>
-</x-layout>
+@endsection

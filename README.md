@@ -67,10 +67,13 @@ environment file:
 
 ```powershell
 composer install
-Copy-Item .env.example .env
+cp .env.example .env
 php artisan key:generate
 npm install
 ```
+
+On Windows PowerShell, use `Copy-Item .env.example .env` if `cp` is not
+available.
 
 This project uses SQLite. The `.env.example` file already sets
 `DB_CONNECTION=sqlite`, and the database file is `database/database.sqlite`.

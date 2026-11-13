@@ -23,13 +23,14 @@ class PostSeeder extends Seeder
         ->sequence(fn ($seq) => ['author_id' => $authors->random()->id])
         ->create();
 
-    \App\Models\Post::create([
+    $pinnedPost = \App\Models\Post::create([
         'author_id' => $myKagawad->id,
         'title' => 'Purok Ledesma Clean-up Drive',
         'category' => 'Announcement',
         'body' => 'Please join our clean-up drive!',
-        'is_pinned' => true,
-        'published_at' => '2004-09-14 08:00:00',
     ]);
+    $pinnedPost->published_at = '2004-09-14 08:00:00';
+    $pinnedPost->is_pinned = true;
+    $pinnedPost->save();
 }
 }

@@ -10,7 +10,7 @@ class Author extends Model
     use HasFactory;
 
     // --- UPDATE YOUR FILLABLE ARRAY HERE ---
-    protected $fillable = ['name', 'position', 'bio', 'email', 'user_id'];
+    protected $fillable = ['name', 'position', 'email', 'user_id'];
 
     // --- ADD YOUR NEW METHODS HERE ---
     public function user() { 

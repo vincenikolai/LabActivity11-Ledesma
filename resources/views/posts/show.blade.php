@@ -1,14 +1,16 @@
-<x-layout>
+@extends('layouts.app')
+
+@section('content')
     <div class="max-w-4xl mx-auto p-6 mt-10">
         
         <!-- Post Details -->
         <div class="bg-white p-6 rounded shadow-md mb-8">
             <h1 class="text-3xl font-bold mb-2">
-                @if($post->is_pinned) 📌 @endif
+                @if($post->is_pinned) Pinned: @endif
                 {{ $post->title }}
             </h1>
             <p class="text-gray-600 mb-4">
-                By {{ $post->author->user->name }} | Views: {{ $post->views }} | Category: {{ $post->category }}
+                By {{ $post->author->name }} | Views: {{ $post->views }} | Category: {{ $post->category }}
             </p>
             
             <div class="mb-4 flex gap-2">
@@ -25,6 +27,16 @@
         <!-- Comments Section -->
         <div class="bg-gray-50 p-6 rounded shadow-md">
             <h2 class="text-2xl font-bold mb-4">Comments ({{ $comments->count() }})</h2>
+
+            @if ($errors->any())
+                <div class="bg-red-100 text-red-700 p-4 rounded mb-6">
+                    <ul class="list-disc pl-5">
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
 
             <!-- Authentication Wrapper for Comment Form -->
             @auth
@@ -66,4 +78,4 @@
         </div>
 
     </div>
-</x-layout>
+@endsection

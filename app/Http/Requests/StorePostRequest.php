@@ -18,7 +18,7 @@ public function rules(): array {
     return [
         'title' => ['required', 'string', 'max:120'],
         'body' => ['required', 'string', 'min:20'],
-        'category' => ['required', 'in:Announcement,Event,Missing,Found,Other'],
+        'category' => ['required', 'in:' . implode(',', \App\Models\Post::CATEGORIES)],
         'tags' => ['required', 'array', 'min:1'],
         'tags.*' => ['exists:tags,id'],
         'is_published' => ['nullable', 'boolean'],
